@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:StopWatch.Resources"
+                      xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <FontFamily x:Key="Default Font">Segoe UI, Lucida Sans Unicode, Helvetia</FontFamily>
+    <system:Double x:Key="LblFontSize">50 </system:Double>
+    <system:Double x:Key="ContentFontSize">20</system:Double>
+    <system:Double x:Key="ButtonFontSize">35</system:Double>
+    <system:Double x:Key="MenuFontSize">12</system:Double>
+</ResourceDictionary>

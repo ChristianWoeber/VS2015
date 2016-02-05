@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:local="clr-namespace:StopWatch.Resources">
+
+
+ 
+    <SolidColorBrush x:Key="ThemeGreen" Color="PaleGreen" />
+    <SolidColorBrush x:Key="ThemeBlue" Color="DarkBlue" />
+    <SolidColorBrush x:Key="ThemeOrange" Color="OrangeRed" />
+    <SolidColorBrush x:Key="ThemeTurQuoise" Color="Turquoise" />
+    <SolidColorBrush x:Key="ThemeBackground1" Color="White" />
+    <SolidColorBrush x:Key="ThemeBackground2" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="ThemeBackground3" Color="AntiqueWhite" />
+
+
+</ResourceDictionary>

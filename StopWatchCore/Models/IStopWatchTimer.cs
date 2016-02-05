@@ -8,10 +8,10 @@ namespace StopWatchCore.Models
 {
     public interface IStopWatchTimer
     {
-        StopWatchState StateTimer { get; }
+        StopWatchState State { get; }
 
         void Start(TimeSpan input);
-        void Stop();
-        TimeSpan GetCurrentTimeTimer();
+        void Paused();
+        TimeSpan GetCurrentTime();
     }
 }

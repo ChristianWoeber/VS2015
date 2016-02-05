@@ -16,7 +16,7 @@ namespace StopWatch.ViewModels
         {
             get
             {
-                return _watch.GetCurrentTimeTimer();
+                return _watch.GetCurrentTime();
             }
 
         }
@@ -26,6 +26,9 @@ namespace StopWatch.ViewModels
             _watch.Start(input);
         }
 
-
+        public void Stop()
+        {
+            _watch.Paused();
+        }
     }
 }

@@ -9,10 +9,11 @@
     <Grid>
         <DockPanel>
             <StackPanel>
-                <Label Name="lblAusgabeTimer"  Height="50"/>
+                <TextBlock Name="lblAusgabeTimer"  Height="50"/>
                 <TextBox Name="txtInput" Height="50"/>
                 <!--<ToggleButton Style="{StaticResource ToggleButtonStyle}" Name="bttnStart" Click="bttnStart_Click"/>-->
                 <Button Name="bttnStart" Content="start" Click="bttnStart_Click"/>
+                <Button Name="bttnPaused" Content="paused" Click="bttnPaused_Click"/>
             </StackPanel>
         </DockPanel>
     </Grid>

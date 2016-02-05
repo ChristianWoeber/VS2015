@@ -30,28 +30,30 @@ namespace StopWatch.Controls
             InitializeComponent();
             _timer = new DispatcherTimer();
             _viewModel = new StopWatchTimerViewModel();
-            _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
-            _timer.Start();
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);          
             _timer.Tick += UpdateWatchTimer;
         }
 
         private void UpdateWatchTimer(object sender, EventArgs e)
         {
-            lblAusgabeTimer.Content = _viewModel.CurrentTimeTimer;
+            lblAusgabeTimer.Text = _viewModel.CurrentTimeTimer.ToString();
         }
 
         private void bttnStart_Click(object sender, RoutedEventArgs e)
         {
             var input = TimeSpan.FromSeconds(Convert.ToDouble(txtInput.Text));
             _viewModel.Start(input);
+            _timer.Start();
 
         }
-        //if (bttnStart.IsChecked == false)
-        //{
-        //    if (_viewModel._watch.Stop() != null && _viewModel._watch.Stop().TimeStamp > DateTime.MinValue)
-        //        LstRoundTimes.Add(_viewModel._watch.Stop());
+   
 
-        //}
+        private void bttnPaused_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Stop();
+            _timer.Stop();
+        }
+      
     }
 }
 

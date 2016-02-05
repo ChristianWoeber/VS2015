@@ -33,11 +33,11 @@ namespace StopWatch.Controls
             _timer = new DispatcherTimer();
             _viewModel = new StopWatchViewModel();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
-            _timer.Start();
+
             _timer.Tick += UpdateWatch;
             lstView.ItemsSource = LstRoundTimes;
 
-            
+
         }
 
         private void UpdateWatch(object sender, EventArgs e)
@@ -47,12 +47,16 @@ namespace StopWatch.Controls
 
         private void bttnStart_Click(object sender, RoutedEventArgs e)
         {
-            if (bttnStart.IsChecked == null)        
-                _viewModel._watch.Pause();               
-             if (bttnStart.IsChecked == true)
+            if (bttnStart.IsChecked == null)
+                _viewModel._watch.Pause();
+            if (bttnStart.IsChecked == true)
+            {
                 _viewModel._watch.Start();
+                _timer.Start();
+            }
             if (bttnStart.IsChecked == false)
             {
+                _timer.Stop();
                 if (_viewModel._watch.Stop() != null && _viewModel._watch.Stop().TimeStamp > DateTime.MinValue)
                     LstRoundTimes.Add(_viewModel._watch.Stop());
 

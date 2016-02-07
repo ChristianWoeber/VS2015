@@ -10,6 +10,19 @@ namespace StopWatch
     /// </summary>
     public partial class MainWindow : Window
     {
+        private void checkTimer_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkTimer.IsChecked == true)
+            {
+                cntrlTimer.Visibility = Visibility.Visible;
+                cntrlStopWatch.Visibility = Visibility.Collapsed;
+            }
+            if (checkTimer.IsChecked == false)
+            {
+                cntrlTimer.Visibility = Visibility.Collapsed;
+                cntrlStopWatch.Visibility = Visibility.Visible;
+            }
+        }
         //private StopWatchCore.Models.StopWatch _watch = new StopWatchCore.Models.StopWatch();
         //private DispatcherTimer _timer = new DispatcherTimer();
         //private ObservableCollection<StopWatchCore.Models.StopWatchItems> LstRoundTimes = new ObservableCollection<StopWatchCore.Models.StopWatchItems>();

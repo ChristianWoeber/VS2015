@@ -11,10 +11,10 @@ namespace StopWatchCore.Models
         private DateTime _startTime;
         private DateTime _pausedStartTime;
         private TimeSpan _pausedDuration;
-        private TimeSpan _currRet;
+        private TimeSpan _currTime;
         private List<TimeSpan> _lstPausedDuration = new List<TimeSpan>();
         private DateTime _pausedEnd;
-        private bool _reset;
+
 
 
         private StopWatchState _state;
@@ -42,20 +42,12 @@ namespace StopWatchCore.Models
         {
             if (State == StopWatchState.Running)
             {
-                if (!_reset && _pausedStartTime > DateTime.MinValue)
-                {
-                    _currRet = DateTime.Now - _startTime - _pausedDuration;
-                    return _currRet;
-                }
-                else
-                    return DateTime.Now - _startTime;
+                _currTime = DateTime.Now - _startTime - _pausedDuration;
+                return _currTime;
             }
             else if (State == StopWatchState.Paused)
             {
-                if (_currRet > TimeSpan.Zero)
-                    return _currRet;
-                else
-                    return _pausedStartTime - _startTime;
+                return _currTime;
             }
             else
                 return new TimeSpan(0, 0, 0, 0, 0);
@@ -69,7 +61,7 @@ namespace StopWatchCore.Models
                 _state = StopWatchState.Running;
                 _pausedEnd = DateTime.Now;
                 _pausedDuration = _pausedEnd - _pausedStartTime;
-                _lstPausedDuration.Add(_pausedDuration);
+                //_lstPausedDuration.Add(_pausedDuration);
             }
             else
                 _startTime = DateTime.Now;
@@ -77,29 +69,30 @@ namespace StopWatchCore.Models
 
         public StopWatchItems Stop()
         {
-            var _endTime = DateTime.Now;
-            var ret = new StopWatchItems
+            if (_currTime > TimeSpan.Zero)
             {
-                RoundTime = _endTime - _startTime,
-                TimeStamp = DateTime.Now
+                var _endTime = _currTime;
+                var ret = new StopWatchItems
+                {
+                    RoundTime = _endTime,
+                    TimeStamp = DateTime.Now
 
-            };
+                };
 
-            _state = StopWatchState.Idle;
-            _reset = true;
-            if (ret.RoundTime > TimeSpan.Zero)
-                return ret;
-            else
+                _state = StopWatchState.Idle;
+                if (ret.RoundTime > TimeSpan.Zero)
+                {
+                    _currTime = TimeSpan.Zero;
+                    return ret;
+                }
+            }
                 return null;
         }
 
         public void Pause()
         {
-
             _pausedStartTime = DateTime.Now;
             _state = StopWatchState.Paused;
-
-
         }
     }
 }

@@ -33,7 +33,7 @@ namespace StopWatch.Controls
             _timer = new DispatcherTimer();
             _viewModel = new StopWatchViewModel();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
-
+            lblAusgabe.Content = "00:00:00";
             _timer.Tick += UpdateWatch;
             lstView.ItemsSource = LstRoundTimes;
 
@@ -42,13 +42,12 @@ namespace StopWatch.Controls
 
         private void UpdateWatch(object sender, EventArgs e)
         {
-            lblAusgabe.Content = _viewModel.CurrentTime;
+            lblAusgabe.Content = _viewModel.CurrentTime.ToString(@"mm\:ss\:ff"); 
         }
 
         private void bttnStart_Click(object sender, RoutedEventArgs e)
         {
-            if (bttnStart.IsChecked == null)
-                _viewModel._watch.Pause();
+
             if (bttnStart.IsChecked == true)
             {
                 _viewModel._watch.Start();
@@ -57,23 +56,30 @@ namespace StopWatch.Controls
             if (bttnStart.IsChecked == false)
             {
                 _timer.Stop();
-                if (_viewModel._watch.Stop() != null && _viewModel._watch.Stop().TimeStamp > DateTime.MinValue)
-                    LstRoundTimes.Add(_viewModel._watch.Stop());
+                _viewModel._watch.Pause();
 
             }
-
         }
 
         private void bttnPause_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel._watch.Pause();
+            if (bttnPause.IsChecked == true)
+            {
+                bttnStop_Click(sender, e);
+            }
+            else
+                return;
         }
 
         private void bttnStop_Click(object sender, RoutedEventArgs e)
         {
+           var ret= _viewModel._watch.Stop();
             _viewModel._watch.Stop();
-            if (_viewModel._watch.Stop() != null && _viewModel._watch.Stop().TimeStamp > DateTime.MinValue)
-                LstRoundTimes.Add(_viewModel._watch.Stop());
+            _timer.Stop();
+            lblAusgabe.Content = "00:00:00";
+            if (ret != null && ret.TimeStamp != DateTime.MinValue)
+                LstRoundTimes.Add(ret);
         }
+
     }
 }

@@ -8,9 +8,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500">
     <Grid>
-        <DockPanel>
-            <contrls:ControlStopWatch Visibility="Visible" DockPanel.Dock="Top" />
-            <contrls:ControlTimer  DockPanel.Dock="Bottom"/>
-        </DockPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" Margin="5" Orientation="Horizontal">
+            <CheckBox Name="checkTimer" Content="Timer Anzeigen" Click="checkTimer_Click"/>
+            <ComboBox Name="combobox"/>
+        </StackPanel>
+        <Grid Name="gridContent" Grid.Column="1" Grid.Row="1">
+            <contrls:ControlStopWatch x:Name="cntrlStopWatch" HorizontalAlignment="Left" />
+            <contrls:ControlTimer   x:Name="cntrlTimer" HorizontalAlignment="Left" Visibility="Collapsed"/>
+        </Grid>
     </Grid>
 </Window>

@@ -8,15 +8,20 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <DockPanel>
-            
-        <StackPanel DockPanel.Dock="Top">
-                <Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\:mm\\:ss}" Style="{StaticResource LblTimeStyle}"/>      
-            <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click"/>
-            <!--<Button Name="bttnPause" Content="Pause" Click="bttnPause_Click"/>
+
+            <StackPanel DockPanel.Dock="Top">
+                <Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\:mm\\:ss}" Style="{StaticResource LblTimeStyle}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click" Margin="0 0 20 0"/>
+                    <ToggleButton Name="bttnPause" Style="{StaticResource ToggleButtonStylePause}" Click="bttnPause_Click"/>
+
+                </StackPanel>
+                <!--<Button Name="bttnPause" Content="Pause" Click="bttnPause_Click"/>
             <Button Name="bttnStop" Content="Stop" Click="bttnStop_Click" />-->
-        </StackPanel>
+            </StackPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <ListView Name="lstView" DisplayMemberPath="RoundTime"/>
+                <ListView Name="lstView" DisplayMemberPath="RoundTime" Style="{StaticResource ListViewItemStyle}">
+                </ListView>
             </StackPanel>
         </DockPanel>
     </Grid>

@@ -32,22 +32,29 @@ namespace StopWatch.Controls
             _viewModel = new StopWatchTimerViewModel();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);          
             _timer.Tick += UpdateWatchTimer;
+            lblAusgabeTimer.Content = "00:00:00";
         }
 
         private void UpdateWatchTimer(object sender, EventArgs e)
         {
-            lblAusgabeTimer.Text = _viewModel.CurrentTimeTimer.ToString();
+            lblAusgabeTimer.Content = _viewModel.CurrentTimeTimer.ToString(@"mm\:ss\:ff");
         }
 
         private void bttnStart_Click(object sender, RoutedEventArgs e)
         {
             var input = TimeSpan.FromSeconds(Convert.ToDouble(txtInput.Text));
-            _viewModel.Start(input);
-            _timer.Start();
+
+            if (bttnStart.IsChecked == true)
+            {
+                _viewModel.Start(input);
+                _timer.Start();
+
+            }
+            else if (bttnStart.IsChecked == false)
+                bttnPaused_Click(sender, e);
 
         }
    
-
         private void bttnPaused_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Stop();

@@ -6,20 +6,33 @@ namespace StopWatchCore.Models
     {
         private TimeSpan _curTime;
         private DateTime _startTime;
-        private TimeSpan _paused;
+        private DateTime _pausedStartTime;
+        private DateTime _pausedEndTime;
+        private TimeSpan _pausedDuration;
         private TimeSpan _input;
+
+        public delegate void StopWatchChangedToIdleHandler(object source, EventArgs args);
+        public event StopWatchChangedToIdleHandler StopWatchStateChangedToIdle;
 
         private StopWatchState _state;
         public StopWatchState State
         {
             get
             {
-                if (_curTime.TotalMilliseconds <= 0)
+                if (_state == StopWatchState.Running && _curTime < TimeSpan.Zero)
+                {
+                    OnStopWatchStateChangedIdle();
                     return StopWatchState.Idle;
+                }
                 else
                     return _state;
             }
             set { _state = value; }
+        }
+
+        protected internal void OnStopWatchStateChangedIdle()
+        {
+            StopWatchStateChangedToIdle(this, EventArgs.Empty);
         }
 
         public TimeSpan CurrentTime
@@ -31,9 +44,8 @@ namespace StopWatchCore.Models
                     case (StopWatchState.Running):
                         _curTime = _input - (DateTime.Now - _startTime);
                         return (_curTime.TotalMilliseconds < 0)
-                            ? TimeSpan.Zero
-                            : _curTime;
-
+                        ? TimeSpan.Zero
+                        : _curTime;
                     default:
                         return TimeSpan.Zero;
                 }
@@ -45,25 +57,32 @@ namespace StopWatchCore.Models
             if (State == StopWatchState.Running)
                 return CurrentTime;
             else if (State == StopWatchState.Paused)
-                return TimeSpan.Zero;
+                return TimeSpan.Zero;          
             else
-                return new TimeSpan(0, 0, 0, 0);
+                return TimeSpan.Zero;
 
         }
 
         public void Start(TimeSpan input)
         {
-            if (input.TotalMilliseconds > 0)
+            if (input.TotalMilliseconds > 0 && _state != StopWatchState.Paused)
             {
                 _state = StopWatchState.Running;
                 _startTime = DateTime.Now;
                 _curTime = _input = input;
             }
-            //else if (input.TotalMilliseconds > 0 && _state== StopWatchState.Paused)
-            //{
-            //    _state = StopWatchState.Running;
-            //    _curTime = input;
-            //}
+            else if (_state == StopWatchState.Paused)
+            {
+                _state = StopWatchState.Running;
+                _pausedEndTime = DateTime.Now;
+                _pausedDuration = _pausedEndTime - _pausedStartTime;
+                input = _input = _curTime;
+                _startTime = _pausedStartTime + _pausedDuration;
+            }
+            else if(_state == StopWatchState.Idle && _curTime < TimeSpan.Zero)
+            {
+                _curTime = input;
+            }
             else
             {
                 _curTime = TimeSpan.Zero;
@@ -74,8 +93,14 @@ namespace StopWatchCore.Models
         public void Paused()
         {
             _state = StopWatchState.Paused;
-             _curTime = _paused;
-           
+            _pausedStartTime = DateTime.Now;
+
         }
+
+        public void Stop()
+        {
+            _state = StopWatchState.Idle;
+        }
+
     }
 }

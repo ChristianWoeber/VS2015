@@ -3,8 +3,10 @@
                     xmlns:local="clr-namespace:StopWatch.Resources"
                       xmlns:system="clr-namespace:System;assembly=mscorlib">
     <FontFamily x:Key="Default Font">Segoe UI, Lucida Sans Unicode, Helvetia</FontFamily>
-    <system:Double x:Key="LblFontSize">50 </system:Double>
+    <system:Double x:Key="LblFontSize">55 </system:Double>
     <system:Double x:Key="ContentFontSize">20</system:Double>
-    <system:Double x:Key="ButtonFontSize">35</system:Double>
+    <system:Double x:Key="ButtonFontSize">30</system:Double>
+    <system:Double x:Key="LstViewHeaderSize">25</system:Double>
+    <system:Double x:Key="ButtonShowFontSize">30</system:Double>
     <system:Double x:Key="MenuFontSize">12</system:Double>
 </ResourceDictionary>

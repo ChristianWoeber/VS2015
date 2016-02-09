@@ -60,22 +60,24 @@ namespace StopWatchCore.Models
             {
                 _state = StopWatchState.Running;
                 _pausedEnd = DateTime.Now;
-                _pausedDuration = _pausedEnd - _pausedStartTime;
-                //_lstPausedDuration.Add(_pausedDuration);
+                _pausedDuration = _pausedEnd - _pausedStartTime;               
             }
             else
                 _startTime = DateTime.Now;
         }
-
+        private int _count = 0;
         public StopWatchItems Stop()
         {
+        
             if (_currTime > TimeSpan.Zero)
             {
+                _count++;           
                 var _endTime = _currTime;
                 var ret = new StopWatchItems
                 {
                     RoundTime = _endTime,
-                    TimeStamp = DateTime.Now
+                    TimeStamp = DateTime.Now,
+                    Id = _count
 
                 };
 

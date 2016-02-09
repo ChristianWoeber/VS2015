@@ -5,23 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StopWatch.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="250"
+             >
     <Grid>
         <DockPanel>
-
             <StackPanel DockPanel.Dock="Top">
                 <Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\:mm\\:ss}" Style="{StaticResource LblTimeStyle}"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click" Margin="0 0 20 0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="{Binding ElementName=lblAusgabe, Path=ActualWidth}">
+                    <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click" Margin="10"/>
                     <ToggleButton Name="bttnPause" Style="{StaticResource ToggleButtonStylePause}" Click="bttnPause_Click"/>
-
                 </StackPanel>
-                <!--<Button Name="bttnPause" Content="Pause" Click="bttnPause_Click"/>
-            <Button Name="bttnStop" Content="Stop" Click="bttnStop_Click" />-->
             </StackPanel>
-            <StackPanel DockPanel.Dock="Bottom">
-                <ListView Name="lstView" DisplayMemberPath="RoundTime" Style="{StaticResource ListViewItemStyle}">
-                </ListView>
+            <ToggleButton DockPanel.Dock="Top" Name="bttnShow" Style="{StaticResource ToggleButtonShowStyle}"
+                          Click="bttnShow_Click" Height="auto" Width="{Binding ElementName=lblAusgabe, Path=ActualWidth}" Margin="10"/>
+            <StackPanel DockPanel.Dock="Bottom" Name="panelRoundTimes" Visibility="Collapsed">
+                <ListViewItem Name="lstViewHeader" Content="Runden Zeiten"  Style="{StaticResource ListViewHeaderStyle}"
+                             />
+                <ListView Name="lstView" ItemsSource="{Binding LstRoundTimes}"
+                           Style="{StaticResource ListViewItemStyle}"/>
             </StackPanel>
         </DockPanel>
     </Grid>

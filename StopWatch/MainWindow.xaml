@@ -6,22 +6,23 @@
         xmlns:local="clr-namespace:StopWatch"
         xmlns:contrls="clr-namespace:StopWatch.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="500">
+        Title="MainWindow" Height="500" Width="500"
+        KeyDown="Window_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" Margin="5" Orientation="Horizontal">
             <CheckBox Name="checkTimer" Content="Timer Anzeigen" Click="checkTimer_Click"/>
-            <ComboBox Name="combobox"/>
+            <!--<ComboBox Name="combobox"/>-->
         </StackPanel>
-        <Grid Name="gridContent" Grid.Column="1" Grid.Row="1">
+        <Grid Name="gridContent" Grid.Column="1" Grid.Row="1" >
             <contrls:ControlStopWatch x:Name="cntrlStopWatch" HorizontalAlignment="Left" />
             <contrls:ControlTimer   x:Name="cntrlTimer" HorizontalAlignment="Left" Visibility="Collapsed"/>
         </Grid>

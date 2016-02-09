@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using StopWatch.ViewModels;
+using StopWatchCore.Models;
 
 namespace StopWatch.Controls
 {
@@ -25,7 +26,8 @@ namespace StopWatch.Controls
     {
         private DispatcherTimer _timer;
         private StopWatchViewModel _viewModel;
-        private ObservableCollection<StopWatchCore.Models.StopWatchItems> LstRoundTimes = new ObservableCollection<StopWatchCore.Models.StopWatchItems>();
+
+        // private ObservableCollection<StopWatchCore.Models.StopWatchItems> LstRoundTimes = new ObservableCollection<StopWatchCore.Models.StopWatchItems>();
 
         public ControlStopWatch()
         {
@@ -35,51 +37,57 @@ namespace StopWatch.Controls
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
             lblAusgabe.Content = "00:00:00";
             _timer.Tick += UpdateWatch;
-            lstView.ItemsSource = LstRoundTimes;
-
+            DataContext = _viewModel;
+            //lstView.ItemsSource = _viewModel.LstRoundTimes; 
 
         }
 
         private void UpdateWatch(object sender, EventArgs e)
         {
-            lblAusgabe.Content = _viewModel.CurrentTime.ToString(@"mm\:ss\:ff"); 
+            lblAusgabe.Content = _viewModel.CurrentTime.ToString(@"mm\:ss\:ff");
         }
 
-        private void bttnStart_Click(object sender, RoutedEventArgs e)
+        public void bttnStart_Click(object sender, RoutedEventArgs e)
         {
+            var ctx = sender as MainWindow;
+            if (ctx is MainWindow)
+            {
+                if (bttnStart.IsChecked == false)
+                    bttnStart.IsChecked = true;
+                else
+                    bttnStart.IsChecked = false;
+            }            
 
             if (bttnStart.IsChecked == true)
             {
-                _viewModel._watch.Start();
+                _viewModel.Start();
                 _timer.Start();
             }
             if (bttnStart.IsChecked == false)
             {
                 _timer.Stop();
-                _viewModel._watch.Pause();
+                _viewModel.Pause();
 
             }
         }
 
         private void bttnPause_Click(object sender, RoutedEventArgs e)
         {
-            if (bttnPause.IsChecked == true)
+            lblAusgabe.Content = "00:00:00";
+            _viewModel.Stop();
+            _timer.Stop();
+            bttnStart.IsChecked = false;
+        }
+
+        private void bttnShow_Click(object sender, RoutedEventArgs e)
+        {
+            if (bttnShow.IsChecked == true)
             {
-                bttnStop_Click(sender, e);
+                panelRoundTimes.Visibility = Visibility.Visible;
             }
             else
-                return;
+                panelRoundTimes.Visibility = Visibility.Collapsed;
         }
-
-        private void bttnStop_Click(object sender, RoutedEventArgs e)
-        {
-           var ret= _viewModel._watch.Stop();
-            _viewModel._watch.Stop();
-            _timer.Stop();
-            lblAusgabe.Content = "00:00:00";
-            if (ret != null && ret.TimeStamp != DateTime.MinValue)
-                LstRoundTimes.Add(ret);
-        }
-
+      
     }
 }

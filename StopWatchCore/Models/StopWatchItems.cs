@@ -10,6 +10,7 @@ namespace StopWatchCore.Models
     {
         public DateTime TimeStamp { get; set; }
         public TimeSpan RoundTime { get; set; }
+        public int Id { get; set; }
 
     }
 }

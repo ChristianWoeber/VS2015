@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using StopWatch.ViewModels;
+using StopWatchCore.Models;
 
 namespace StopWatch.Controls
 {
@@ -30,37 +19,71 @@ namespace StopWatch.Controls
             InitializeComponent();
             _timer = new DispatcherTimer();
             _viewModel = new StopWatchTimerViewModel();
-            _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);          
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
+            _viewModel._watch.StopWatchStateChangedToIdle += _watch_StopWatchStateChangedToIdle;
             _timer.Tick += UpdateWatchTimer;
             lblAusgabeTimer.Content = "00:00:00";
+        }
+
+        private void _watch_StopWatchStateChangedToIdle(object source, EventArgs args)
+        {
+            bttnStart.IsChecked = false;
+            _viewModel.Stop();
+            _timer.Stop();
         }
 
         private void UpdateWatchTimer(object sender, EventArgs e)
         {
             lblAusgabeTimer.Content = _viewModel.CurrentTimeTimer.ToString(@"mm\:ss\:ff");
+            // checkState(sender, e);
         }
 
-        private void bttnStart_Click(object sender, RoutedEventArgs e)
+        public void bttnStart_Click(object sender, RoutedEventArgs e)
         {
-            var input = TimeSpan.FromSeconds(Convert.ToDouble(txtInput.Text));
-
-            if (bttnStart.IsChecked == true)
+            var ctx = sender as MainWindow;
+            if (ctx is MainWindow)
             {
-                _viewModel.Start(input);
-                _timer.Start();
-
+                if (bttnStart.IsChecked == false)
+                    bttnStart.IsChecked = true;
+                else
+                    bttnStart.IsChecked = false;
             }
-            else if (bttnStart.IsChecked == false)
-                bttnPaused_Click(sender, e);
 
+            var input = txtInput.Text;
+            double ret;
+
+            if (double.TryParse(input, out ret))
+            {
+                var inputTimespan = TimeSpan.FromSeconds(ret);
+                if (bttnStart.IsChecked == true)
+                {
+                    _viewModel.Start(inputTimespan);
+                    _timer.Start();
+
+                }
+                else if (bttnStart.IsChecked == false)
+                    bttnPaused_Click(sender, e);
+            }
         }
-   
+
+        private void checkState(object sender, EventArgs e)
+        {
+            if (_viewModel.State == StopWatchState.Idle)
+            {
+                bttnStart.IsChecked = false;
+                _viewModel.Stop();
+                _timer.Stop();
+            }
+            else
+                return;
+        }
+
         private void bttnPaused_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Stop();
+            _viewModel.Paused();
             _timer.Stop();
         }
-      
+
     }
 }
 

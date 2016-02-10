@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartsCore", "ChartsCore\ChartsCore.csproj", "{38A0F883-20E7-436F-B35E-A5F1A13DFFF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartRendererWpf", "ChartRendererWpf\ChartRendererWpf.csproj", "{5687F5F1-46E6-4FC8-B9E3-1F2356B70634}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38A0F883-20E7-436F-B35E-A5F1A13DFFF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38A0F883-20E7-436F-B35E-A5F1A13DFFF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38A0F883-20E7-436F-B35E-A5F1A13DFFF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38A0F883-20E7-436F-B35E-A5F1A13DFFF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5687F5F1-46E6-4FC8-B9E3-1F2356B70634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5687F5F1-46E6-4FC8-B9E3-1F2356B70634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5687F5F1-46E6-4FC8-B9E3-1F2356B70634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5687F5F1-46E6-4FC8-B9E3-1F2356B70634}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

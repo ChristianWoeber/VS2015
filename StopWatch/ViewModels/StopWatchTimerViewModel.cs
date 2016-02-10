@@ -8,15 +8,56 @@ using StopWatchCore.Models;
 
 namespace StopWatch.ViewModels
 {
-    public class StopWatchTimerViewModel
+    public class StopWatchTimerViewModel : INotifyPropertyChanged
     {
         public StopWatchTimer _watch = new StopWatchTimer();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        protected virtual void OnPropertyChanged(String propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public TimeSpan CurrentTimeTimer
         {
             get
-            {
+            {                             
                 return _watch.GetCurrentTime();
+            }
+
+        }
+        private int _currentTimeMilliseconds;
+        public int CurrentTimeMilliseconds
+        {
+            get
+            {                
+                return _currentTimeMilliseconds;
+            }
+            set
+            {
+                if (_watch.GetCurrentTime().Milliseconds == value)
+                    return;
+
+                _currentTimeMilliseconds = value;
+                OnPropertyChanged(nameof(CurrentTimeMilliseconds));
+            }
+        }
+        public string CurrentTimeSeconds
+        {
+            get
+            {
+                return _watch.GetCurrentTime().Seconds.ToString();
+            }
+
+        }
+        public string CurrentTimeMinutes
+        {
+            get
+            {
+               return _watch.GetCurrentTime().Minutes.ToString();
             }
 
         }

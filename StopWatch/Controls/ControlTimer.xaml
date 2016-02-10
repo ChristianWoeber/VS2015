@@ -3,17 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:StopWatch.Controls"
+             xmlns:controls="clr-namespace:StopWatch.Controls"
+             xmlns:models="clr-namespace:StopWatch.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance models:StopWatchTimerViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <DockPanel>
             <StackPanel>
-                <Label Name="lblAusgabeTimer" Style="{StaticResource LblTimeStyle}"/>
-                <TextBox Name="txtInput" Style="{StaticResource TextBoxStyle}" Width="{Binding ElementName=lblAusgabeTimer,Path=ActualWidth}"/>
-                <!--<ToggleButton Style="{StaticResource ToggleButtonStyle}" Name="bttnStart" Click="bttnStart_Click"/>-->
-                <ToggleButton Name="bttnStart" Click="bttnStart_Click" Style="{StaticResource ToggleButtonStyle }"/>
-                <!--<Button Name="bttnPaused" Content="paused" Click="bttnPaused_Click"/>-->
+                <controls:ControlTimerOutput x:Name="cntrlTimerOutput" Margin="10"/>            
+                <ToggleButton Name="bttnStart" Click="bttnStart_Click" Style="{StaticResource ToggleButtonStyle }"/>              
             </StackPanel>
         </DockPanel>
     </Grid>

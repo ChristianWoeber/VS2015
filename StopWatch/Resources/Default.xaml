@@ -33,6 +33,49 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ButtonIncrement" TargetType="Button">
+        <Setter Property="Content" Value="&#9651;"/>
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource ThemeTurQuoise }"/>
+        <Setter Property="Background" Value="{StaticResource ThemeBackground1}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ButtonDecrement" TargetType="Button">
+        <Setter Property="Content" Value="&#9661;"/>
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource ThemeTurQuoise }"/>
+        <Setter Property="Background" Value="{StaticResource ThemeBackground1}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBoxTimerOutput" TargetType="TextBox">
+        <Setter Property="FontSize" Value="{StaticResource LblFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource ThemeTurQuoise }"/>
+        <Setter Property="Background" Value="{StaticResource ThemeBackground1}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ThemeBackground2}"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <!--<Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>-->
+    </Style>
     <Style x:Key="ListViewHeaderStyle" TargetType="ListViewItem">
         <Setter Property="FontSize" Value="{StaticResource  LstViewHeaderSize}"/>
         <Setter Property="FontFamily" Value="{StaticResource Default Font}"/>

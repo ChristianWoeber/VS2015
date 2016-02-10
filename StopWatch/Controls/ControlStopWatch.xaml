@@ -4,13 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StopWatch.Controls"
+             xmlns:models="clr-namespace:StopWatch.ViewModels"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance models:StopWatchTimerViewModel}"
              d:DesignHeight="300" d:DesignWidth="250"
              >
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Top">
-                <Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\:mm\\:ss}" Style="{StaticResource LblTimeStyle}"/>
+                <Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\: mm\\: ss}" Style="{StaticResource LblTimeStyle}"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="{Binding ElementName=lblAusgabe, Path=ActualWidth}">
                     <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click" Margin="10"/>
                     <ToggleButton Name="bttnPause" Style="{StaticResource ToggleButtonStylePause}" Click="bttnPause_Click"/>

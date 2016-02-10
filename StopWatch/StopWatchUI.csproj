@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ControlTimerOutput.xaml.cs">
+      <DependentUpon>ControlTimerOutput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\StopWatchTimerViewModel.cs" />
     <Compile Include="ViewModels\StopWatchViewModel.cs" />
     <Page Include="Controls\ControlStopWatch.xaml">
@@ -62,6 +65,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ControlTimer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ControlTimerOutput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

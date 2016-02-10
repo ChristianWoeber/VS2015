@@ -13,6 +13,7 @@ namespace StopWatch.Controls
     {
         private DispatcherTimer _timer;
         private StopWatchTimerViewModel _viewModel;
+        private ControlTimerOutput _cntrl;
 
         public ControlTimer()
         {
@@ -21,10 +22,10 @@ namespace StopWatch.Controls
             _viewModel = new StopWatchTimerViewModel();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
             _viewModel._watch.StopWatchStateChangedToIdle += _watch_StopWatchStateChangedToIdle;
-            _timer.Tick += UpdateWatchTimer;
-            lblAusgabeTimer.Content = "00:00:00";
+            _timer.Tick += UpdateWatchTimer;         
+            _cntrl = cntrlTimerOutput;
         }
-
+   
         private void _watch_StopWatchStateChangedToIdle(object source, EventArgs args)
         {
             bttnStart.IsChecked = false;
@@ -33,9 +34,11 @@ namespace StopWatch.Controls
         }
 
         private void UpdateWatchTimer(object sender, EventArgs e)
-        {
-            lblAusgabeTimer.Content = _viewModel.CurrentTimeTimer.ToString(@"mm\:ss\:ff");
-            // checkState(sender, e);
+        {       
+            _cntrl.txtMM.Text = _viewModel.CurrentTimeTimer.Minutes.ToString("00");
+            _cntrl.txtSS.Text = _viewModel.CurrentTimeTimer.Seconds.ToString("00");
+            _cntrl.txtMS.Text = string.Format("{0:000}", _viewModel.CurrentTimeTimer.Milliseconds);
+          
         }
 
         public void bttnStart_Click(object sender, RoutedEventArgs e)
@@ -49,12 +52,8 @@ namespace StopWatch.Controls
                     bttnStart.IsChecked = false;
             }
 
-            var input = txtInput.Text;
-            double ret;
-
-            if (double.TryParse(input, out ret))
-            {
-                var inputTimespan = TimeSpan.FromSeconds(ret);
+           
+            var inputTimespan = checkInput(_cntrl.txtMM.Text, _cntrl.txtSS.Text);
                 if (bttnStart.IsChecked == true)
                 {
                     _viewModel.Start(inputTimespan);
@@ -63,7 +62,22 @@ namespace StopWatch.Controls
                 }
                 else if (bttnStart.IsChecked == false)
                     bttnPaused_Click(sender, e);
-            }
+            
+        }
+
+        private TimeSpan checkInput(string MM, string SS)
+        {
+            double ret1;
+            double ret2;
+            if (double.TryParse(MM, out ret1) && double.TryParse(SS, out ret2))            
+                return TimeSpan.FromMinutes(ret1) + TimeSpan.FromSeconds(ret2);            
+            if (double.TryParse(MM, out ret1))
+                return TimeSpan.FromMinutes(ret1);
+            if (double.TryParse(SS, out ret2))
+                return TimeSpan.FromMinutes(ret2);
+            else
+                return TimeSpan.Zero;
+
         }
 
         private void checkState(object sender, EventArgs e)

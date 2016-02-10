@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StopWatch"
+         xmlns:switch="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
         xmlns:contrls="clr-namespace:StopWatch.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500"
@@ -20,6 +21,7 @@
         
         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" Margin="5" Orientation="Horizontal">
             <CheckBox Name="checkTimer" Content="Timer Anzeigen" Click="checkTimer_Click"/>
+            <switch:HorizontalToggleSwitch/>
             <!--<ComboBox Name="combobox"/>-->
         </StackPanel>
         <Grid Name="gridContent" Grid.Column="1" Grid.Row="1" >

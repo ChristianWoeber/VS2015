@@ -54,5 +54,10 @@ namespace StopWatch
             }
 
         }
+
+        private void HorizontalToggleSwitch_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

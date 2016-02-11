@@ -7,26 +7,41 @@
          xmlns:switch="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
         xmlns:contrls="clr-namespace:StopWatch.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="500"
+        Title="MainWindow" Height="500" MinWidth="270" Width="300"
         KeyDown="Window_KeyDown">
-    <Grid>
+    <Window.Resources>
+        <Style TargetType="Menu" BasedOn="{StaticResource mnuStyle}"/>
+        <Style TargetType="MenuItem" BasedOn="{StaticResource mnuItemStyle}"/>
+
+    </Window.Resources>
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="55"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" Margin="5" Orientation="Horizontal">
-            <CheckBox Name="checkTimer" Content="Timer Anzeigen" Click="checkTimer_Click"/>
-            <switch:HorizontalToggleSwitch/>
+        <Menu Grid.Row="0"  HorizontalAlignment="Stretch"  >
+            <MenuItem Header="Einstellungen">
+                <MenuItem Header="Version"/>
+                <MenuItem Header="Change Theme"/>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <!--<CheckBox Name="checkTimer" Content="Timer Anzeigen" Click="checkTimer_Click"/>-->
+            <switch:HorizontalToggleSwitch Name="checkTimer" CheckedContent="Timer" UncheckedContent="Stop Watch" 
+                                           CheckedBackground="{StaticResource ThemeBackground1}" CheckedForeground="{StaticResource ThemeTurQuoise}"
+                                           UncheckedBackground="{StaticResource ThemeTurQuoise}" UncheckedForeground="{StaticResource ThemeBackground1}"
+                                           Width="120" Height="35" Checked="checkTimer_Click" Unchecked="checkTimer_Click" 
+                                           FontFamily="Calibri Light" FontSize="14" BorderBrush="{StaticResource ThemeBackground1}"
+                                           ClipToBounds="True"/>
             <!--<ComboBox Name="combobox"/>-->
-        </StackPanel>
-        <Grid Name="gridContent" Grid.Column="1" Grid.Row="1" >
-            <contrls:ControlStopWatch x:Name="cntrlStopWatch" HorizontalAlignment="Left" />
-            <contrls:ControlTimer   x:Name="cntrlTimer" HorizontalAlignment="Left" Visibility="Collapsed"/>
+        </Grid>
+        <Grid Name="gridContent" Grid.Row="2"  HorizontalAlignment="Stretch" >
+            <contrls:ControlStopWatch x:Name="cntrlStopWatch" HorizontalAlignment="Stretch" />
+            <contrls:ControlTimer   x:Name="cntrlTimer" HorizontalAlignment="Stretch" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

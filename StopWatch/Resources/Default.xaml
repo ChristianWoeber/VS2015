@@ -151,6 +151,7 @@
                         <TextBlock Text="{Binding Id}"/>
                         <TextBlock Text="."/>
                         <TextBlock Text="{Binding RoundTime, StringFormat=mm\\:ss\\.ff}" />
+                        <Button Name="bttnSave" Content="Save" Click="bttnSave_Click"/>
                         <!--<TextBlock Text="{Binding TimeStamp}"/>-->
                     </WrapPanel>
                 </DataTemplate>

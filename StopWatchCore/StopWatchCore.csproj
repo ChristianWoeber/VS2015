@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Models\IStopWatch.cs" />
     <Compile Include="Models\IStopWatchTimer.cs" />
+    <Compile Include="Models\SaveWatch.cs" />
     <Compile Include="Models\StopWatch.cs" />
     <Compile Include="Models\StopWatchItems.cs" />
     <Compile Include="Models\StopWatchState.cs" />

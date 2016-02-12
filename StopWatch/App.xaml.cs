@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using StopWatchCore.Models;
 
 namespace StopWatch
 {
@@ -13,5 +14,11 @@ namespace StopWatch
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            SaveWatch.LoadSaveGames();
+            base.OnStartup(e);
+        }
+      
     }
 }

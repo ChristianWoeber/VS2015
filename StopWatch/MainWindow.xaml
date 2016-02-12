@@ -36,7 +36,7 @@
                                            UncheckedBackground="{StaticResource ThemeTurQuoise}" UncheckedForeground="{StaticResource ThemeBackground1}"
                                            Width="120" Height="35" Checked="checkTimer_Click" Unchecked="checkTimer_Click" 
                                            FontFamily="Calibri Light" FontSize="14" BorderBrush="{StaticResource ThemeBackground1}"
-                                           ClipToBounds="True"/>
+                                           ClipToBounds="True" HorizontalAlignment="Left" Margin="20 0 0 0" ThumbSize="15"  />
             <!--<ComboBox Name="combobox"/>-->
         </Grid>
         <Grid Name="gridContent" Grid.Row="2"  HorizontalAlignment="Stretch" >

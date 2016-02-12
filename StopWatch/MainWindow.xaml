@@ -29,7 +29,7 @@
                 <MenuItem Header="Change Theme"/>
             </MenuItem>
         </Menu>
-        <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+        <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="left" Margin="20 0 0 0">
             <!--<CheckBox Name="checkTimer" Content="Timer Anzeigen" Click="checkTimer_Click"/>-->
             <switch:HorizontalToggleSwitch Name="checkTimer" CheckedContent="Timer" UncheckedContent="Stop Watch" 
                                            CheckedBackground="{StaticResource ThemeBackground1}" CheckedForeground="{StaticResource ThemeTurQuoise}"

@@ -7,19 +7,20 @@
              xmlns:models="clr-namespace:StopWatch.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance models:StopWatchTimerViewModel}"
-             d:DesignHeight="300" d:DesignWidth="250"
-             >
+             d:DesignHeight="300" d:DesignWidth="250">
+
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Top">
-                <Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\: mm\\: ss}" Style="{StaticResource LblTimeStyle}"/>
+                <!--<Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\: mm\\: ss}" Style="{StaticResource LblTimeStyle}"/>-->
+                <local:ControlStopWatchOutput x:Name="cntlStopWatchOutput" Margin="10"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="{Binding ElementName=lblAusgabe, Path=ActualWidth}">
                     <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click" Margin="10"/>
                     <ToggleButton Name="bttnPause" Style="{StaticResource ToggleButtonStylePause}" Click="bttnPause_Click"/>
                 </StackPanel>
             </StackPanel>
             <ToggleButton DockPanel.Dock="Top" Name="bttnShow" Style="{StaticResource ToggleButtonShowStyle}"
-                          Click="bttnShow_Click" Height="auto" Width="{Binding ElementName=lblAusgabe, Path=ActualWidth}" Margin="10"/>
+                          Click="bttnShow_Click" Height="auto" Width="{Binding ElementName=cntlStopWatchOutput, Path=Width}" Margin="10 2 10 2"/>
             <StackPanel DockPanel.Dock="Bottom" Name="panelRoundTimes" Visibility="Collapsed">
                 <ListViewItem Name="lstViewHeader" Content="Runden Zeiten"  Style="{StaticResource ListViewHeaderStyle}"
                              />

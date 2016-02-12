@@ -158,6 +158,22 @@
         </Setter>
     </Style>
 
+
+    <Style x:Key="ButtonColon" TargetType="Button">
+        <Setter Property="Content" Value="&#11825;"/>
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource ThemeTurQuoise }"/>
+        <Setter Property="Background" Value="{StaticResource ThemeBackground1}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ButtonIncrement" TargetType="Button">
         <Setter Property="Content" Value="&#9651;"/>
         <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
@@ -329,11 +345,11 @@
             <!--<Trigger Property="IsChecked" Value="{x:Null}">
             <Setter Property="Content" Value="Stop"/>               
             </Trigger>-->
-            <Trigger Property="IsChecked" Value="False">
-                <Setter Property="Content" Value="&#9661;"/>
-            </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Content" Value="&#9651;"/>
+                <Setter Property="Content" Value="&#9195;"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="Content" Value="&#9196;"/>
             </Trigger>
         </Style.Triggers>
     </Style>

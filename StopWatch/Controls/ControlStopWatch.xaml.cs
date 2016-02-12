@@ -35,7 +35,7 @@ namespace StopWatch.Controls
             _timer = new DispatcherTimer();
             _viewModel = new StopWatchViewModel();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
-            lblAusgabe.Content = "00:00:00";
+          //  lblAusgabe.Content = "00:00:00";
             _timer.Tick += UpdateWatch;
             DataContext = _viewModel;
             //lstView.ItemsSource = _viewModel.LstRoundTimes; 
@@ -44,7 +44,10 @@ namespace StopWatch.Controls
 
         private void UpdateWatch(object sender, EventArgs e)
         {
-            lblAusgabe.Content = _viewModel.CurrentTime.ToString(@"mm\:ss\:ff");
+            //lblAusgabe.Content = _viewModel.CurrentTime.ToString(@"mm\:ss\:ff");
+            cntlStopWatchOutput.txtMM.Text = _viewModel.CurrentTime.Minutes.ToString("00");
+            cntlStopWatchOutput.txtSS.Text = _viewModel.CurrentTime.Seconds.ToString("00");
+            cntlStopWatchOutput.txtMS.Text = _viewModel.CurrentTime.Milliseconds.ToString("000");
         }
 
         public void bttnStart_Click(object sender, RoutedEventArgs e)
@@ -73,10 +76,18 @@ namespace StopWatch.Controls
 
         private void bttnPause_Click(object sender, RoutedEventArgs e)
         {
-            lblAusgabe.Content = "00:00:00";
+            //lblAusgabe.Content = "00:00:00";
+            ClearView();
             _viewModel.Stop();
             _timer.Stop();
             bttnStart.IsChecked = false;
+        }
+
+        private void ClearView()
+        {
+            cntlStopWatchOutput.txtMM.Text ="00";
+            cntlStopWatchOutput.txtSS.Text ="00";
+            cntlStopWatchOutput.txtMS.Text = "00";
         }
 
         private void bttnShow_Click(object sender, RoutedEventArgs e)

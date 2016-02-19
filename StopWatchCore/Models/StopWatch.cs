@@ -65,19 +65,20 @@ namespace StopWatchCore.Models
             else
                 _startTime = DateTime.Now;
         }
-        private int _count = 0;
+       
+        private int _count=0;
         public StopWatchItems Stop()
         {
-        
             if (_currTime > TimeSpan.Zero)
             {
-                _count++;           
+                _count++;       
+                    
                 var _endTime = _currTime;
                 var ret = new StopWatchItems
                 {
                     RoundTime = _endTime,
                     TimeStamp = DateTime.Now,
-                    Id = _count
+                    //Id = 0
 
                 };
 

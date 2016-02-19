@@ -7,7 +7,7 @@
          xmlns:switch="clr-namespace:ToggleSwitch;assembly=ToggleSwitch"
         xmlns:contrls="clr-namespace:StopWatch.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" MinWidth="270" Width="300"
+        Title="MainWindow" Height="500" MinWidth="290" Width="320"
         KeyDown="Window_KeyDown">
     <Window.Resources>
         <Style TargetType="Menu" BasedOn="{StaticResource mnuStyle}"/>
@@ -34,8 +34,8 @@
             <switch:HorizontalToggleSwitch Name="checkTimer" CheckedContent="Timer" UncheckedContent="Stop Watch" 
                                            CheckedBackground="{StaticResource ThemeBackground1}" CheckedForeground="{StaticResource ThemeTurQuoise}"
                                            UncheckedBackground="{StaticResource ThemeTurQuoise}" UncheckedForeground="{StaticResource ThemeBackground1}"
-                                           Width="120" Height="35" Checked="checkTimer_Click" Unchecked="checkTimer_Click" 
-                                           FontFamily="Calibri Light" FontSize="14" BorderBrush="{StaticResource ThemeBackground1}"
+                                           Width="100" Height="35" Checked="checkTimer_Click" Unchecked="checkTimer_Click" 
+                                           FontFamily="Calibri Light" FontSize="15" BorderBrush="{StaticResource ThemeBackground1}"
                                            ClipToBounds="True" HorizontalAlignment="Left" Margin="20 0 0 0" ThumbSize="15"  />
             <!--<ComboBox Name="combobox"/>-->
         </Grid>

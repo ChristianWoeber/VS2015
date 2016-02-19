@@ -7,25 +7,68 @@
              xmlns:models="clr-namespace:StopWatch.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance models:StopWatchTimerViewModel}"
-             d:DesignHeight="300" d:DesignWidth="250">
-
+             d:DesignHeight="300" d:DesignWidth="270">
+    <UserControl.Resources>
+        <Style x:Key="bttnDelete" TargetType="Button" BasedOn="{StaticResource ButtonsDeleteSaveStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsSaved, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Content" Value="&#120;"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsSaved, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                    <Setter Property="Content" Value="&#120;"/>
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="bttnSave" TargetType="Button" BasedOn="{StaticResource ButtonsDeleteSaveStyle}">
+            <Setter Property="Content" Value="&#10003;"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Top">
                 <!--<Label Name="lblAusgabe" Content="{Binding CurrentTime, StringFormat=00:hh\\: mm\\: ss}" Style="{StaticResource LblTimeStyle}"/>-->
                 <local:ControlStopWatchOutput x:Name="cntlStopWatchOutput" Margin="10"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="{Binding ElementName=lblAusgabe, Path=ActualWidth}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="{Binding ElementName=cntlStopWatchOutput, Path=Width}">
                     <ToggleButton Name="bttnStart" Style="{StaticResource ToggleButtonStyle}" Click="bttnStart_Click" Margin="10"/>
                     <ToggleButton Name="bttnPause" Style="{StaticResource ToggleButtonStylePause}" Click="bttnPause_Click"/>
                 </StackPanel>
             </StackPanel>
             <ToggleButton DockPanel.Dock="Top" Name="bttnShow" Style="{StaticResource ToggleButtonShowStyle}"
-                          Click="bttnShow_Click" Height="auto" Width="{Binding ElementName=cntlStopWatchOutput, Path=Width}" Margin="10 2 10 2"/>
-            <StackPanel DockPanel.Dock="Bottom" Name="panelRoundTimes" Visibility="Collapsed">
-                <ListViewItem Name="lstViewHeader" Content="Runden Zeiten"  Style="{StaticResource ListViewHeaderStyle}"
+                          Click="bttnShow_Click" Height="auto" Width="{Binding ElementName=cntlStopWatchOutput, Path=Width}"
+                          Margin="10 2 10 2"/>
+            <StackPanel Name="panelparentListView" DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <StackPanel  Name="panelRoundTimes" Visibility="Collapsed">
+                    <ListViewItem Name="lstViewHeader" Content="Runden Zeiten" IsHitTestVisible="False"
+                               Style="{StaticResource ListViewHeaderStyle}"
                              />
-                <ListView Name="lstView" ItemsSource="{Binding LstRoundTimes}"
-                           Style="{StaticResource ListViewItemStyle}"/>
+                    <ListView Name="lstView" ItemsSource="{Binding LstRoundTimes}"                        
+                          IsSynchronizedWithCurrentItem="True"
+                          SelectedItem="{Binding Path=SelectedStopItem}"
+                          SelectedIndex="{Binding Path=SelectedStopItemIndex}"
+                              SelectionMode="Single"
+                              AlternationCount="{Binding Path=LstRoundTimes.Count}"
+                           Style="{StaticResource ListViewItemStyle}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplatedParent.(ItemsControl.AlternationIndex)}"/>
+                                    <TextBlock Text=". "/>
+                                    <TextBlock Text="{Binding RoundTime, StringFormat=mm\\:ss\\.ff}" />
+                                    <TextBlock Text=", "/>
+                                    <TextBlock Text="{Binding TimeStamp, StringFormat=dd.mm.yyyy hh:mm:ss,ConverterCulture=de-AT}"/>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+                <StackPanel  Name="panelButtons" Orientation="Horizontal"
+                             Visibility="Collapsed" VerticalAlignment="Top" Margin="0 29.9 0 0">
+                    <Button Style="{StaticResource bttnSave}" Name="bttnSave"  Click="bttnSave_Click"
+                            Tag="save" ToolTip="save"/>
+                    <Button Style="{StaticResource bttnDelete}" Name="bttnDelete"  Click="bttnDelete_Click" 
+                            Tag="delete" ToolTip="delete"/>
+                </StackPanel>
             </StackPanel>
         </DockPanel>
     </Grid>

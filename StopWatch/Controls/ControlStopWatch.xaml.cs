@@ -27,6 +27,7 @@ namespace StopWatch.Controls
         private DispatcherTimer _timer;
         private StopWatchViewModel _viewModel;
 
+
         // private ObservableCollection<StopWatchCore.Models.StopWatchItems> LstRoundTimes = new ObservableCollection<StopWatchCore.Models.StopWatchItems>();
 
         public ControlStopWatch()
@@ -35,7 +36,7 @@ namespace StopWatch.Controls
             _timer = new DispatcherTimer();
             _viewModel = new StopWatchViewModel();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 16);
-          //  lblAusgabe.Content = "00:00:00";
+            //  lblAusgabe.Content = "00:00:00";
             _timer.Tick += UpdateWatch;
             DataContext = _viewModel;
             //lstView.ItemsSource = _viewModel.LstRoundTimes; 
@@ -59,7 +60,7 @@ namespace StopWatch.Controls
                     bttnStart.IsChecked = true;
                 else
                     bttnStart.IsChecked = false;
-            }            
+            }
 
             if (bttnStart.IsChecked == true)
             {
@@ -85,8 +86,8 @@ namespace StopWatch.Controls
 
         private void ClearView()
         {
-            cntlStopWatchOutput.txtMM.Text ="00";
-            cntlStopWatchOutput.txtSS.Text ="00";
+            cntlStopWatchOutput.txtMM.Text = "00";
+            cntlStopWatchOutput.txtSS.Text = "00";
             cntlStopWatchOutput.txtMS.Text = "00";
         }
 
@@ -94,11 +95,44 @@ namespace StopWatch.Controls
         {
             if (bttnShow.IsChecked == true)
             {
+                panelButtons.Visibility = Visibility.Visible;
+                panelparentListView.Visibility = Visibility.Visible;
                 panelRoundTimes.Visibility = Visibility.Visible;
+
             }
             else
+            {
+                panelButtons.Visibility = Visibility.Collapsed;
+                panelparentListView.Visibility = Visibility.Collapsed;
                 panelRoundTimes.Visibility = Visibility.Collapsed;
+            }
         }
-      
+
+        private void bttnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var bttn = sender as Button;
+            var save = lstView.SelectedItem as StopWatchItems;
+            SaveWatch.Save(save);
+        }
+
+        private void bttnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var delete = lstView.SelectedItem as StopWatchItems;
+            _viewModel.Delete(delete);
+        }
+
+        //private void lstView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    var lst = sender as ListView;
+        //    var selected = lst.SelectedItem;
+        //    var bttn = sender as Button;
+        //    //    if (bttn.Tag.Equals("save"))
+        //    //        bttnSave_Click(sender, e);
+        //    //    else
+        //    //bttnDelete_Click(sender, e);
+
+
+
+        //}
     }
 }

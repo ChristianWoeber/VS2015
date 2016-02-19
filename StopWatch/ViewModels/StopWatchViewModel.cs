@@ -15,6 +15,22 @@ namespace StopWatch.ViewModels
         private StopWatchCore.Models.StopWatch _watch = new StopWatchCore.Models.StopWatch();
         private StopWatchItems _watchItem = new StopWatchItems();
 
+        public StopWatchViewModel()
+        {
+            var saveList = SaveWatch.LoadSaveGames();
+
+            if (saveList.Count == 1)
+                _lstRoundTimes.Add(saveList.FirstOrDefault());
+            else if (saveList.Count > 1)
+            {
+                foreach (var item in saveList)
+                    _lstRoundTimes.Add(item);
+            }
+            else
+                return;
+
+        }
+
         protected virtual void OnPropertyChanged(String propertyName)
         {
             if (PropertyChanged != null)
@@ -40,7 +56,24 @@ namespace StopWatch.ViewModels
             }
         }
 
-        public ObservableCollection<StopWatchItems> LstRoundTimes => _lstRoundTimes;
+        
+        public ObservableCollection<StopWatchItems> LstRoundTimes
+        {
+            get
+            {
+                return _lstRoundTimes;
+            }
+            set
+            {
+
+                if (_lstRoundTimes == value || _lstRoundTimes.Count == 0)
+                    return;
+
+                _lstRoundTimes = value;
+                OnPropertyChanged(nameof(LstRoundTimes));
+                OnPropertyChanged(nameof(Id));
+            }
+        }
 
 
         public DateTime TimeStamp
@@ -50,24 +83,66 @@ namespace StopWatch.ViewModels
                 return _watchItem.TimeStamp;
             }
         }
-        private int _id;
+
         public int Id
         {
             get
             {
-                return _id;
+                var index= LstRoundTimes.IndexOf(SelectedStopItem);
+                return index;
+
+            }
+        }
+
+        private StopWatchItems _selectedStopItem;
+        public StopWatchItems SelectedStopItem
+        {
+            get
+            {
+                return _selectedStopItem;
             }
             set
             {
 
-                if (_watchItem.Id == value)
+                if (_selectedStopItem == value)
                     return;
 
-                _watchItem.Id = _id = value;
+                _selectedStopItem = value;
+                OnPropertyChanged(nameof(SelectedStopItem));
+                OnPropertyChanged(nameof(IsSaved));
                 OnPropertyChanged(nameof(Id));
+                OnPropertyChanged(nameof(LstRoundTimes));
+            }
+        }
+        private int _selectedStopItemIndex;
+        public int SelectedStopItemIndex
+        {
+            get
+            {
+                return _selectedStopItemIndex;
+            }
+            set
+            {
+
+                if (_selectedStopItemIndex == value)
+                    return;
+
+                _selectedStopItemIndex = value;
+                OnPropertyChanged(nameof(SelectedStopItemIndex));
             }
         }
 
+        public bool IsSaved
+        {
+            get
+            {
+                if (SaveWatch.IsSaved(SelectedStopItem))
+                    return true;
+                else
+                    return false;
+
+            }
+        }
 
         internal void Start()
         {
@@ -89,5 +164,12 @@ namespace StopWatch.ViewModels
             }
             return ret;
         }
+
+        internal void Delete(StopWatchItems delete)
+        {
+            SaveWatch.Delete(delete);
+            LstRoundTimes.Remove(delete);
+        }
+
     }
 }

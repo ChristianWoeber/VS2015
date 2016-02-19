@@ -144,19 +144,19 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
-        <Setter Property="ItemTemplate">
+        <!--<Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <WrapPanel>
                         <TextBlock Text="{Binding Id}"/>
                         <TextBlock Text="."/>
                         <TextBlock Text="{Binding RoundTime, StringFormat=mm\\:ss\\.ff}" />
-                        <Button Name="bttnSave" Content="Save" Click="bttnSave_Click"/>
-                        <!--<TextBlock Text="{Binding TimeStamp}"/>-->
+                        
+                        --><!--<TextBlock Text="{Binding TimeStamp}"/>--><!--
                     </WrapPanel>
                 </DataTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 
 
@@ -173,6 +173,26 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="ButtonsDeleteSaveStyle" TargetType="Button">
+        <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource ThemeBackground1 }"/>
+        <Setter Property="Background" Value="{StaticResource ThemeTurQuoise}"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <!--<Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>-->
     </Style>
 
     <Style x:Key="ButtonIncrement" TargetType="Button">

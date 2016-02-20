@@ -155,9 +155,8 @@ namespace StopWatch.ViewModels
 
         internal void Save(StopWatchItems save)
         {
-            SaveWatch.Save(save);
-            LstRoundTimes.Add(save);
-            //OnPropertyChanged(nameof(LstRoundTimes));
+            SaveWatch.Save(save);        
+            OnPropertyChanged(nameof(LstRoundTimes));
             OnPropertyChanged(nameof(IsSaved));
         }
 
@@ -184,8 +183,9 @@ namespace StopWatch.ViewModels
 
         internal void Delete(StopWatchItems delete)
         {
-            SaveWatch.Delete(delete);
-            LstRoundTimes.Remove(delete);
+            SaveWatch.Delete(delete);         
+            OnPropertyChanged(nameof(LstRoundTimes));
+            OnPropertyChanged(nameof(IsSaved));
         }
 
     }

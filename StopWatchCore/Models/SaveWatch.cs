@@ -59,14 +59,8 @@ namespace StopWatchCore.Models
 
                 var delete = string.Join(";", deleteItem.RoundTime, deleteItem.TimeStamp);
 
-                foreach (var item in lstDelete)
-                {
-                    if (string.Equals(item, delete))
-                    {
-                        lstDelete.Remove(item);
-                    }
-                }
-                File.WriteAllLines(_path, lstDelete.ToArray());
+                var deletedList = lstDelete.Where(x => x.Equals(delete)).ToList();
+                File.WriteAllLines(_path, deletedList.ToArray());
             }
             else
                 throw new ArgumentException("keine SaveFile vorhanden");
@@ -74,55 +68,50 @@ namespace StopWatchCore.Models
 
         private static List<string> ParseFile()
         {
-            var fileStream = File.Open(_path, FileMode.Open, FileAccess.ReadWrite);
-            using (var reader = new StreamReader(fileStream))
+            if (File.Exists(_path))
             {
-                var lstSave = new List<string>();
-                var str = reader.ReadToEnd().TrimEnd();
-                var lines = str.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-                foreach (var l in lines)
+                var fileStream = File.Open(_path, FileMode.Open, FileAccess.ReadWrite);
+                using (var reader = new StreamReader(fileStream))
                 {
-                    lstSave.Add(l);
-                }
+                    var lstSave = new List<string>();
+                    var str = reader.ReadToEnd().TrimEnd();
+                    var lines = str.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
-                return lstSave;
+                    foreach (var l in lines)
+                    {
+                        lstSave.Add(l);
+                    }
+
+                    return lstSave;
+                }
             }
+            else
+                throw new ArgumentNullException("File not found");
 
         }
 
         public static List<StopWatchItems> LoadSaveGames()
         {
-            if (File.Exists(_path) && !string.IsNullOrWhiteSpace(File.ReadAllText(_path)))
+            var lstSave = ParseFile();
+
+            if (lstSave.Count > 0)
             {
-                // var file = File.ReadAllLines(_path);
-                using (var sr = new StreamReader(_path))
+                var lstStopWatchItems = new List<StopWatchItems>();
+                foreach (var item in lstSave)
                 {
-                    string[] file = new string[] { sr.ReadToEnd().Trim() };
-
-                    var lines = file.Select(x => x.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
-                    var list = new List<StopWatchItems>();
-                    if (!string.IsNullOrWhiteSpace(file[0]))
+                    var items = item.Split(';');
+                    var ret = new StopWatchItems
                     {
-                        foreach (var line in lines)
-                        {
-                            foreach (var item in line.Select(y => y.Split(new string[] { ";" }, StringSplitOptions.None)))
-                            {
-                                var ret = new StopWatchItems
-                                {
-                                    RoundTime = TimeSpan.Parse(item[0]),
-                                    TimeStamp = DateTime.Parse(item[1])
-                                };
-                                list.Add(ret);
-                            }
-                        }
-                        return list;
-                    }
-                    throw new ArgumentException("File ist leer");
+                        RoundTime = TimeSpan.Parse(items[0]),
+                        TimeStamp = DateTime.Parse(items[1])
+                    };
+                    lstStopWatchItems.Add(ret);
                 }
-
+                return lstStopWatchItems;
             }
-            return null;
+            else
+                throw new ArgumentException("keine StopWatchItems");
         }
+
     }
 }

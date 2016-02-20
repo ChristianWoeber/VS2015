@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:glo="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:local="clr-namespace:StopWatch.Controls"
              xmlns:models="clr-namespace:StopWatch.ViewModels"
              mc:Ignorable="d" 
@@ -56,7 +57,7 @@
                                     <TextBlock Text=". "/>
                                     <TextBlock Text="{Binding RoundTime, StringFormat=mm\\:ss\\.ff}" />
                                     <TextBlock Text=", "/>
-                                    <TextBlock Text="{Binding TimeStamp, StringFormat=dd.mm.yyyy hh:mm:ss,ConverterCulture=de-AT}"/>
+                                    <TextBlock Text="{Binding TimeStamp, StringFormat=dd.MM.yyyy HH:mm:ss,ConverterCulture={x:Static glo:CultureInfo.CurrentCulture }}"/>
                                 </WrapPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

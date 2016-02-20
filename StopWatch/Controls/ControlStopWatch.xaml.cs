@@ -110,9 +110,10 @@ namespace StopWatch.Controls
 
         private void bttnSave_Click(object sender, RoutedEventArgs e)
         {
-            var bttn = sender as Button;
+           // var bttn = sender as Button;
             var save = lstView.SelectedItem as StopWatchItems;
-            SaveWatch.Save(save);
+            _viewModel.Save(save);
+          
         }
 
         private void bttnDelete_Click(object sender, RoutedEventArgs e)

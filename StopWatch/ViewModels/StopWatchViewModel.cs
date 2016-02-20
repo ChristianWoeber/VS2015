@@ -18,7 +18,8 @@ namespace StopWatch.ViewModels
         public StopWatchViewModel()
         {
             var saveList = SaveWatch.LoadSaveGames();
-
+            if (saveList == null)
+                return;
             if (saveList.Count == 1)
                 _lstRoundTimes.Add(saveList.FirstOrDefault());
             else if (saveList.Count > 1)
@@ -131,7 +132,7 @@ namespace StopWatch.ViewModels
                 OnPropertyChanged(nameof(SelectedStopItemIndex));
             }
         }
-
+        private bool _isSaved;
         public bool IsSaved
         {
             get
@@ -139,9 +140,25 @@ namespace StopWatch.ViewModels
                 if (SaveWatch.IsSaved(SelectedStopItem))
                     return true;
                 else
-                    return false;
+                    return _isSaved;
 
             }
+            set
+            {
+                if (_isSaved == value)
+                    return;
+
+                _isSaved = value;
+                OnPropertyChanged(nameof(IsSaved));
+            }
+        }
+
+        internal void Save(StopWatchItems save)
+        {
+            SaveWatch.Save(save);
+            LstRoundTimes.Add(save);
+            //OnPropertyChanged(nameof(LstRoundTimes));
+            OnPropertyChanged(nameof(IsSaved));
         }
 
         internal void Start()

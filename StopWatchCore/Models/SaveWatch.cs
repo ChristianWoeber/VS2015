@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,25 +10,27 @@ namespace StopWatchCore.Models
 {
     public static class SaveWatch
     {
-        private static string _path = @"C:\Users\" + Environment.UserName + "\\Documents\\Saves\\SaveWatches.txt";
+        private static string _path = @"C:\tmp\" + Environment.UserName + "\\Saves\\SaveWatches.txt";
+        private static string _dir = @"C:\tmp\" + Environment.UserName + "\\Saves";
 
         public static void Save(StopWatchItems saveItem)
         {
-            // StreamWriter _file = new StreamWriter(path);         
+            if (!Directory.Exists(_dir))
+                Directory.CreateDirectory(_dir);
+
             var saveString = string.Join(";", saveItem.RoundTime, saveItem.TimeStamp);
             var lstSave = new List<string> { saveString };
-            using (var fileStream = new FileStream(_path, FileMode.Append, FileAccess.Write))
-            using (var sw = new StreamWriter(fileStream))
-            {
-                sw.Write(Environment.NewLine + saveString);
 
+            using (var sw = new StreamWriter(_path, true))
+            {
+                sw.WriteLine(saveString);
             }
         }
         public static bool IsSaved(StopWatchItems saveItem)
         {
-            if (saveItem != null)
+            if (saveItem != null && File.Exists(_path))
             {
-                using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.ReadWrite))
+                using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.Read))
                 using (var sr = new StreamReader(fileStream))
                 {
                     var compareString = string.Join(";", saveItem.RoundTime, saveItem.TimeStamp);
@@ -50,35 +53,52 @@ namespace StopWatchCore.Models
         {
             if (File.Exists(_path))
             {
-                var SaveString = "";
-                using (var sr = new StreamReader(_path))
-                {
-                    SaveString = sr.ReadToEnd();
+                var lstDelete = new List<string>();
+                var lstSave = ParseFile();
+                lstDelete.AddRange(lstSave);
 
-                }
-                using (var fileStream = new FileStream(_path, FileMode.Open, FileAccess.ReadWrite))
-                using (var sw = new StreamWriter(fileStream))
+                var delete = string.Join(";", deleteItem.RoundTime, deleteItem.TimeStamp);
+
+                foreach (var item in lstDelete)
                 {
-                    var delete = string.Join(";", deleteItem.RoundTime, deleteItem.TimeStamp);
-                    if (SaveString.Equals(delete))
+                    if (string.Equals(item, delete))
                     {
-                        SaveString.Replace(delete, "");
-                        sw.WriteLine(SaveString);
+                        lstDelete.Remove(item);
                     }
                 }
+                File.WriteAllLines(_path, lstDelete.ToArray());
             }
             else
                 throw new ArgumentException("keine SaveFile vorhanden");
         }
 
+        private static List<string> ParseFile()
+        {
+            var fileStream = File.Open(_path, FileMode.Open, FileAccess.ReadWrite);
+            using (var reader = new StreamReader(fileStream))
+            {
+                var lstSave = new List<string>();
+                var str = reader.ReadToEnd().TrimEnd();
+                var lines = str.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+                foreach (var l in lines)
+                {
+                    lstSave.Add(l);
+                }
+
+                return lstSave;
+            }
+
+        }
+
         public static List<StopWatchItems> LoadSaveGames()
         {
-            if (File.Exists(_path))
+            if (File.Exists(_path) && !string.IsNullOrWhiteSpace(File.ReadAllText(_path)))
             {
                 // var file = File.ReadAllLines(_path);
                 using (var sr = new StreamReader(_path))
                 {
-                    string[] file = new string[] { sr.ReadToEnd() };
+                    string[] file = new string[] { sr.ReadToEnd().Trim() };
 
                     var lines = file.Select(x => x.Split(new string[] { Environment.NewLine }, StringSplitOptions.None));
                     var list = new List<StopWatchItems>();

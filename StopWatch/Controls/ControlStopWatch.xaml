@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:StopWatch.Controls"
              xmlns:models="clr-namespace:StopWatch.ViewModels"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance models:StopWatchTimerViewModel}"
+             d:DataContext="{d:DesignInstance models:StopWatchViewModel}"
              d:DesignHeight="300" d:DesignWidth="270">
     <UserControl.Resources>
         <Style x:Key="bttnDelete" TargetType="Button" BasedOn="{StaticResource ButtonsDeleteSaveStyle}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=IsSaved, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                <DataTrigger Binding="{Binding Path=IsSaved, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
                     <Setter Property="Content" Value="&#120;"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=IsSaved, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                <DataTrigger Binding="{Binding Path=IsSaved, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Value="False">
                     <Setter Property="Content" Value="&#120;"/>
                     <Setter Property="IsEnabled" Value="False"/>
                 </DataTrigger>
